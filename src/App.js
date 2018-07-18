@@ -11,19 +11,14 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <NavBar />
-            <div className="header__img">
+            <div className="header">
               <img
                 src="https://res.cloudinary.com/travdevcloudserver/image/upload/v1531247438/modernBeeTrans.png"
                 alt="Logo"
                 class="header__img"
               />
+              <h1 className="App-title">BUZZLES</h1>
             </div>
-            {/* <img
-              src="https://res.cloudinary.com/travdevcloudserver/image/upload/v1531247438/modernBeeTrans.png"
-              className="App-logo"
-              alt="logo"
-            /> */}
-            <h1 className="App-title">Buzzles</h1>
           </header>
           <p className="App-intro">
             <ion-icon name="md-heart" />
