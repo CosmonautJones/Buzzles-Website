@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
 
-import NavBar from './Components/NavBar';
-import './App.css';
+import HomepageLayout from './Components/Homepage';
+// import './App.css';
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
         <div className="App">
-          <header className="App-header">
+        <HomepageLayout />
+          {/* <header className="App-header">
             <NavBar />
             <div className="header">
               <img
@@ -23,7 +24,7 @@ class App extends Component {
           <p className="App-intro">
             <ion-icon name="md-heart" />
             To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
+          </p> */}
         </div>
       </BrowserRouter>
     );
