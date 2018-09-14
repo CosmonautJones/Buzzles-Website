@@ -16,6 +16,7 @@ import {
   Visibility,
 } from 'semantic-ui-react'
 
+
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
  * such things.
@@ -51,7 +52,7 @@ const HomepageHeading = ({ mobile }) => (
         fontSize: mobile ? '2em' : '3em',
         fontWeight: 'normal',
         fontFamily: 'Oregano',
-        marginTop: mobile ? '.05em' : '.3em',
+        // marginTop: mobile ? '.05em' : '.3em',
       }}
     />
   </Container>
