@@ -215,6 +215,7 @@ const HomepageLayout = () => (
             <p style={{ fontSize: '1.33em' }}>
               Buzzles Shaved Ice combines the best New Orleans style flavors with the finest softest Hawaiian style   shave ice.   Whether you call it a SHAVE ICE (Hawaii), SNOWBALLS (New Orleans), or SNOW CONES (anyone   who doesn't know any better),  you can be sure you are getting the best of both worlds when you get a   Buzzles. 
             </p>
+            
             <Header as='h3' style={{ fontSize: '2em' }}>
               Let Buzzles bring the Finest ice in town to your next event!
             </Header>
