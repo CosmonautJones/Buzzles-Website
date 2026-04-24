@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Button,
+  Card,
   Container,
   Divider,
   Grid,
@@ -12,331 +12,292 @@ import {
   Menu,
   Responsive,
   Segment,
-  Sidebar,
-  Visibility
+  Sidebar
 } from 'semantic-ui-react';
+import './Homepage.css';
 
-/* eslint-disable react/no-multi-comp */
-/* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
- * such things.
- */
+const locations = [
+  {
+    name: 'FM 2920 Location',
+    address: '4035 FM 2920 Rd, Spring, TX 77388',
+    mapsUrl: 'https://maps.google.com/?q=4035+FM+2920+Rd+Spring+TX+77388'
+  },
+  {
+    name: 'Louetta Location',
+    address: '5025 FM Louetta Rd, Spring, TX 77379',
+    mapsUrl: 'https://maps.google.com/?q=5025+FM+Louetta+Rd+Spring+TX+77379'
+  }
+];
+
+const featuredFlavors = [
+  'Tiger’s Blood',
+  'Blue Raspberry',
+  'Wedding Cake',
+  'Pina Colada',
+  'Mango',
+  'Strawberry Lemonade'
+];
+
+const eventTypes = [
+  'School functions',
+  'Birthday parties',
+  'Corporate events',
+  'Wedding receptions',
+  'Fundraisers',
+  'Community festivals'
+];
+
 const HomepageHeading = ({ mobile }) => (
-  <Container text>
+  <Container text className="hero-content">
     <Image
       src="https://res.cloudinary.com/travdevcloudserver/image/upload/v1531247438/modernBeeTrans.png"
-      size="medium"
-      style={{
-        marginTop: mobile ? '.3em' : '.5em',
-        display: 'inline-flex'
-      }}
+      size={mobile ? 'small' : 'medium'}
+      alt="Buzzles bee logo"
+      centered
     />
-    <Header
-      as="h1"
-      content="Buzzles"
-      inverted
-      style={{
-        fontSize: mobile ? '6em' : '10em',
-        fontWeight: 'normal',
-        fontFamily: 'Oregano',
-        color: 'rgb(4, 153, 191)',
-        marginBottom: 0,
-        marginTop: 0
-        // marginTop: mobile ? '.5em' : '1em',
-      }}
-    />
-    <Header
-      as="h2"
-      content="Never had a day a snowcone couldn't fix."
-      inverted
-      style={{
-        fontSize: mobile ? '2em' : '3em',
-        fontWeight: 'normal',
-        fontFamily: 'Oregano'
-        // marginTop: mobile ? '.05em' : '.3em',
-      }}
-    />
+    <Header as="h1" className="hero-title">
+      Buzzles Shaved Ice
+    </Header>
+    <Header as="h2" className="hero-subtitle">
+      The finest ice in town — served all year round.
+    </Header>
+    <Button.Group size={mobile ? 'medium' : 'large'}>
+      <Button
+        as="a"
+        href="https://maps.google.com/?q=4035+FM+2920+Rd+Spring+TX+77388"
+        target="_blank"
+        rel="noopener noreferrer"
+        primary>
+        Find a Location
+      </Button>
+      <Button.Or text="or" />
+      <Button as="a" href="tel:+18322764603" color="yellow">
+        Call 832-276-4603
+      </Button>
+    </Button.Group>
   </Container>
 );
 
-HomepageHeading.propTypes = {
-  mobile: PropTypes.bool
-};
-
-/* Heads up!
- * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
- * It can be more complicated, but you can create really flexible markup.
- */
-class DesktopContainer extends Component {
-  state = {};
-
-  hideFixedMenu = () => this.setState({ fixed: false });
-  showFixedMenu = () => this.setState({ fixed: true });
-
-  render() {
-    const { children } = this.props;
-    const { fixed } = this.state;
-
-    return (
-      <Responsive minWidth={Responsive.onlyTablet.minWidth}>
-        <Visibility
-          once={false}
-          onBottomPassed={this.showFixedMenu}
-          onBottomPassedReverse={this.hideFixedMenu}>
-          <Segment
-            inverted
-            textAlign="center"
-            style={{ minHeight: 700, padding: '1em 0em' }}
-            vertical>
-            <Menu
-              fixed={fixed ? 'top' : null}
-              inverted={!fixed}
-              pointing={!fixed}
-              secondary={!fixed}
-              size="large">
-              <Container>
-                <Menu.Item as="a" active>
-                  Home
-                </Menu.Item>
-                <Menu.Item as="a">Locations</Menu.Item>
-                {/* <Menu.Item as='a'></Menu.Item> */}
-                <Menu.Item as="a">Careers</Menu.Item>
-                <Menu.Item position="right">
-                  {/* <Button as='a' inverted={!fixed}>
-                    Log in
-                  </Button>
-                  <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
-                    Sign Up
-                  </Button> */}
-                </Menu.Item>
-              </Container>
-            </Menu>
-            <HomepageHeading />
-          </Segment>
-        </Visibility>
-
-        {children}
-      </Responsive>
-    );
-  }
-}
-
-DesktopContainer.propTypes = {
-  children: PropTypes.node
-};
-
-class MobileContainer extends Component {
-  state = {};
-
-  handlePusherClick = () => {
-    const { sidebarOpened } = this.state;
-
-    if (sidebarOpened) this.setState({ sidebarOpened: false });
-  };
-
-  handleToggle = () =>
-    this.setState({ sidebarOpened: !this.state.sidebarOpened });
-
-  render() {
-    const { children } = this.props;
-    const { sidebarOpened } = this.state;
-
-    return (
-      <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
-        <Sidebar.Pushable>
-          <Sidebar
-            as={Menu}
-            animation="uncover"
-            inverted
-            vertical
-            visible={sidebarOpened}>
-            <Menu.Item as="a" active>
-              Home
-            </Menu.Item>
-            <Menu.Item as="a">Work</Menu.Item>
-            <Menu.Item as="a">Company</Menu.Item>
-            <Menu.Item as="a">Careers</Menu.Item>
-          </Sidebar>
-
-          <Sidebar.Pusher
-            dimmed={sidebarOpened}
-            onClick={this.handlePusherClick}
-            style={{ minHeight: '100vh' }}>
-            <Segment
-              inverted
-              textAlign="center"
-              style={{ minHeight: 350, padding: '1em 0em' }}
-              vertical>
-              <Container>
-                <Menu inverted pointing secondary size="large">
-                  <Menu.Item onClick={this.handleToggle}>
-                    <Icon name="sidebar" />
-                  </Menu.Item>
-                  <Menu.Item position="right">
-                    <Button as="a" inverted>
-                      Buzzles
-                    </Button>
-                  </Menu.Item>
-                </Menu>
-              </Container>
-              <HomepageHeading mobile />
-            </Segment>
-
-            {children}
-          </Sidebar.Pusher>
-        </Sidebar.Pushable>
-      </Responsive>
-    );
-  }
-}
-
-MobileContainer.propTypes = {
-  children: PropTypes.node
-};
-
-const ResponsiveContainer = ({ children }) => (
-  <div>
-    <DesktopContainer>{children}</DesktopContainer>
-    <MobileContainer>{children}</MobileContainer>
-  </div>
+const DesktopNavigation = () => (
+  <Menu borderless secondary className="top-nav" size="large">
+    <Container>
+      <Menu.Item header>Buzzles</Menu.Item>
+      <Menu.Item as="a" href="#locations">
+        Locations
+      </Menu.Item>
+      <Menu.Item as="a" href="#flavors">
+        Flavors
+      </Menu.Item>
+      <Menu.Item as="a" href="#events">
+        Mobile Events
+      </Menu.Item>
+      <Menu.Menu position="right">
+        <Menu.Item as="a" href="mailto:buzzlesshavedice@gmail.com">
+          <Icon name="mail" /> Email Us
+        </Menu.Item>
+      </Menu.Menu>
+    </Container>
+  </Menu>
 );
 
-ResponsiveContainer.propTypes = {
-  children: PropTypes.node
-};
+class MobileNavigation extends React.Component {
+  state = { sidebarOpened: false };
 
-const HomepageLayout = () => (
-  <ResponsiveContainer>
-    <Segment style={{ padding: '8em 0em' }} vertical>
-      <Grid container stackable verticalAlign="middle">
-        <Grid.Row>
-          <Grid.Column width={8}>
-            <Header as="h3" style={{ fontSize: '2em' }}>
-              THE FINEST ICE IN TOWN ALL YEAR ROUND!
-            </Header>
-            <p style={{ fontSize: '1.33em' }}>
-              Buzzles Shaved Ice combines the best New Orleans style flavors
-              with the finest softest Hawaiian style shave ice. Whether you call
-              it a SHAVE ICE (Hawaii), SNOWBALLS (New Orleans), or SNOW CONES
-              (anyone who doesn't know any better), you can be sure you are
-              getting the best of both worlds when you get a Buzzles.
-            </p>
+  handleToggle = () => this.setState(({ sidebarOpened }) => ({ sidebarOpened: !sidebarOpened }));
 
-            <Header as="h3" style={{ fontSize: '2em' }}>
-              Let Buzzles bring the Finest ice in town to your next event!
-            </Header>
-            <p style={{ fontSize: '1.33em' }}>
-              After years and countless requests, we are happy to announce that
-              Buzzles now has a mobile unit! School Functions, Birthday Parties,
-              Corporate Events, Wedding Receptions, Fund Raisers, and more! For
-              event bookings, please contact us via email
-              (BuzzlesEvents@gmail.com)
-            </p>
-          </Grid.Column>
-          <Grid.Column floated="right" width={6}>
-            <Image
-              bordered
-              rounded
-              size="large"
-              src="/images/wireframe/white-image.png"
-            />
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row>
-          <Grid.Column textAlign="center">
-            <Button size="huge">Check Them Out</Button>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Segment>
-    <Segment style={{ padding: '0em' }} vertical>
-      <Grid celled="internally" columns="equal" stackable>
-        <Grid.Row textAlign="center">
-          <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-            <Header as="h3" style={{ fontSize: '2em' }}>
-              "What a Company"
-            </Header>
-            <p style={{ fontSize: '1.33em' }}>
-              That is what they all say about us
-            </p>
-          </Grid.Column>
-          <Grid.Column style={{ paddingBottom: '5em', paddingTop: '5em' }}>
-            <Header as="h3" style={{ fontSize: '2em' }}>
-              "Fantastic! I'm a huge fan of Buzzles, the best shaved ice ive
-              ever tasted! It's to die for!"
-            </Header>
-            <p style={{ fontSize: '1.33em' }}>
-              <Image avatar src="/images/avatar/large/nan.jpg" />
-              <b>Nan</b> Chief Fun Officer Acme Toys
-            </p>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    </Segment>
-    <Segment style={{ padding: '8em 0em' }} vertical>
-      <Container text>
-        <Header as="h3" style={{ fontSize: '2em' }}>
-          Breaking The Grid, Grabs Your Attention
+  handleClose = () => this.setState({ sidebarOpened: false });
+
+  render() {
+    const { sidebarOpened } = this.state;
+
+    return (
+      <Sidebar.Pushable>
+        <Sidebar
+          as={Menu}
+          animation="overlay"
+          icon="labeled"
+          inverted
+          onHide={this.handleClose}
+          vertical
+          visible={sidebarOpened}
+          width="thin">
+          <Menu.Item as="a" href="#locations" onClick={this.handleClose}>
+            Locations
+          </Menu.Item>
+          <Menu.Item as="a" href="#flavors" onClick={this.handleClose}>
+            Flavors
+          </Menu.Item>
+          <Menu.Item as="a" href="#events" onClick={this.handleClose}>
+            Mobile Events
+          </Menu.Item>
+          <Menu.Item as="a" href="mailto:buzzlesshavedice@gmail.com" onClick={this.handleClose}>
+            Contact
+          </Menu.Item>
+        </Sidebar>
+
+        <Sidebar.Pusher dimmed={sidebarOpened}>
+          <Segment inverted textAlign="center" vertical className="hero-segment">
+            <Container>
+              <Menu inverted secondary borderless>
+                <Menu.Item onClick={this.handleToggle}>
+                  <Icon name="sidebar" />
+                </Menu.Item>
+                <Menu.Item position="right" header>
+                  Buzzles
+                </Menu.Item>
+              </Menu>
+            </Container>
+            <HomepageHeading mobile />
+          </Segment>
+          <MainContent />
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
+    );
+  }
+}
+
+const MainContent = () => (
+  <React.Fragment>
+    <Segment vertical className="section" id="locations">
+      <Container>
+        <Header as="h2" textAlign="center">
+          Two Spring / Klein Locations
         </Header>
-        <p style={{ fontSize: '1.33em' }}>
-          Instead of focusing on content creation and hard work, we have learned
-          how to master the art of doing nothing by providing massive amounts of
-          whitespace and generic content that can seem massive, monolithic and
-          worth your attention.
-        </p>
-        <Button as="a" size="large">
-          Read More
-        </Button>
-        <Divider
-          as="h4"
-          className="header"
-          horizontal
-          style={{ margin: '3em 0em', textTransform: 'uppercase' }}>
-          <a href="#">Case Studies</a>
-        </Divider>
-        <Header as="h3" style={{ fontSize: '2em' }}>
-          Did We Tell You About Our Bananas?
-        </Header>
-        <p style={{ fontSize: '1.33em' }}>
-          Yes I know you probably disregarded the earlier boasts as non-sequitur
-          filler content, but it's really true. It took years of gene splicing
-          and combinatory DNA research, but our bananas can really dance.
-        </p>
-        <Button as="a" size="large">
-          I'm Still Quite Interested
-        </Button>
+        <Card.Group stackable itemsPerRow={2}>
+          {locations.map(location => (
+            <Card fluid key={location.name}>
+              <Card.Content>
+                <Card.Header>{location.name}</Card.Header>
+                <Card.Meta>Open year-round</Card.Meta>
+                <Card.Description>
+                  <Icon name="map marker alternate" />
+                  {location.address}
+                </Card.Description>
+              </Card.Content>
+              <Card.Content extra>
+                <Button as="a" href={location.mapsUrl} target="_blank" rel="noopener noreferrer" basic color="blue">
+                  Get Directions
+                </Button>
+              </Card.Content>
+            </Card>
+          ))}
+        </Card.Group>
       </Container>
     </Segment>
-    <Segment inverted vertical style={{ padding: '5em 0em' }}>
+
+    <Segment vertical className="section alt" id="flavors">
       <Container>
-        <Grid divided inverted stackable>
-          <Grid.Row>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="About" />
-              <List link inverted>
-                <List.Item as="a">Sitemap</List.Item>
-                <List.Item as="a">Contact Us</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={3}>
-              <Header inverted as="h4" content="Services" />
-              <List link inverted>
-                <List.Item as="a">Banana Pre-Order</List.Item>
-                <List.Item as="a">DNA FAQ</List.Item>
-              </List>
-            </Grid.Column>
-            <Grid.Column width={7}>
-              <Header as="h4" inverted>
-                Footer Header
-              </Header>
-              <p>
-                Extra space for a call to action inside the footer that could
-                help re-engage users.
-              </p>
-            </Grid.Column>
-          </Grid.Row>
+        <Grid stackable columns={2} verticalAlign="middle">
+          <Grid.Column>
+            <Header as="h2">Signature Flavors</Header>
+            <p>
+              New Orleans-inspired syrups and fluffy Hawaiian-style shaved ice come together for a smoother, bolder
+              treat in every cup.
+            </p>
+            <List bulleted>
+              {featuredFlavors.map(flavor => (
+                <List.Item key={flavor}>{flavor}</List.Item>
+              ))}
+            </List>
+          </Grid.Column>
+          <Grid.Column>
+            <Image
+              rounded
+              fluid
+              src="https://images.unsplash.com/photo-1527761939622-9119094630cf?auto=format&fit=crop&w=1200&q=80"
+              alt="Colorful shaved ice cups"
+            />
+          </Grid.Column>
         </Grid>
       </Container>
     </Segment>
-  </ResponsiveContainer>
+
+    <Segment vertical className="section" id="events">
+      <Container>
+        <Header as="h2" textAlign="center">
+          Book Buzzles Mobile Events
+        </Header>
+        <p className="section-lead">
+          Bring Buzzles to your next celebration. Our mobile unit is perfect for crowds, easy to set up, and always a
+          hit.
+        </p>
+        <Grid columns={3} stackable>
+          {eventTypes.map(event => (
+            <Grid.Column key={event}>
+              <Segment textAlign="center" className="event-chip">
+                <Icon name="star" color="yellow" /> {event}
+              </Segment>
+            </Grid.Column>
+          ))}
+        </Grid>
+        <Divider hidden />
+        <Button as="a" href="mailto:BuzzlesEvents@gmail.com" size="large" primary>
+          Request Event Pricing
+        </Button>
+      </Container>
+    </Segment>
+
+    <Segment inverted vertical className="footer">
+      <Container>
+        <Grid stackable columns={3}>
+          <Grid.Column>
+            <Header inverted as="h4">
+              Contact
+            </Header>
+            <List link inverted>
+              <List.Item as="a" href="tel:+18322764603">
+                832-276-4603
+              </List.Item>
+              <List.Item as="a" href="mailto:buzzlesshavedice@gmail.com">
+                buzzlesshavedice@gmail.com
+              </List.Item>
+            </List>
+          </Grid.Column>
+          <Grid.Column>
+            <Header inverted as="h4">
+              Links
+            </Header>
+            <List link inverted>
+              <List.Item as="a" href="https://www.facebook.com/buzzlesshavedice" target="_blank" rel="noopener noreferrer">
+                Facebook
+              </List.Item>
+              <List.Item as="a" href="https://www.yelp.com/biz/buzzles-shaved-ice-spring" target="_blank" rel="noopener noreferrer">
+                Yelp
+              </List.Item>
+              <List.Item as="a" href="https://squareup.com/gift/ML5EH2V78EPCW/order" target="_blank" rel="noopener noreferrer">
+                Gift Cards
+              </List.Item>
+            </List>
+          </Grid.Column>
+          <Grid.Column>
+            <Header inverted as="h4">
+              Buzzles Promise
+            </Header>
+            <p>
+              Friendly service, great texture, and bold flavors every visit. Thanks for supporting local shaved ice in
+              Spring, Texas.
+            </p>
+          </Grid.Column>
+        </Grid>
+      </Container>
+    </Segment>
+  </React.Fragment>
 );
+
+const HomepageLayout = () => (
+  <div>
+    <Responsive minWidth={Responsive.onlyTablet.minWidth}>
+      <Segment inverted textAlign="center" vertical className="hero-segment">
+        <DesktopNavigation />
+        <HomepageHeading />
+      </Segment>
+      <MainContent />
+    </Responsive>
+
+    <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
+      <MobileNavigation />
+    </Responsive>
+  </div>
+);
+
 export default HomepageLayout;

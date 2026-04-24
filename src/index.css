@@ -1,5 +1,10 @@
 body {
   margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+  font-family: 'Atma', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #ffffff;
+  color: #1f2937;
+}
+
+a {
+  color: inherit;
 }
